@@ -1,0 +1,1640 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>Idle Game Maker Handbook</title>
+<!--
+Code and graphics copyright Orteil, 2021
+Feel free to alter this code to your liking, but please do not re-host it, do not profit from it and do not present it as your own.
+-->
+
+<link rel="shortcut icon" href="img/favicon.ico" />
+<style type="text/css">@font-face {font-family:Domine;font-style:normal;font-weight:400;src:url(/cf-fonts/s/domine/5.2.8/latin/400/normal.woff2);unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-display:swap;}@font-face {font-family:Domine;font-style:normal;font-weight:400;src:url(/cf-fonts/s/domine/5.2.8/latin-ext/400/normal.woff2);unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;font-display:swap;}</style>
+
+<style>
+
+/* reset CSS */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/*=====================================================================================
+BASE
+=======================================================================================*/
+html,body
+{
+	width:100%;
+	height:100%;
+}
+body
+{
+	color:#ccc;
+	text-shadow:1px 1px 0px #000;
+	background:#222 url(img/crunchyBGdark.jpg);
+	font-family:Tahoma,Arial,sans-serif;
+	font-size:11px;
+}
+
+b{font-weight:bold;}
+i{font-style: italic;}
+small{font-size:80%;}
+
+a{color:#06c;}
+a:hover,a:active{color:#6cf;}
+
+#wrap
+{
+	position:relative;
+	height:100%;
+	max-width:1000px;
+	margin:auto;
+	color:rgba(0,0,0,0.85);
+}
+#page
+{
+	position:absolute;left:0px;top:24px;right:0px;bottom:0px;
+	background:#ccc url(img/crunchyBG.jpg);
+	text-shadow:1px 1px 0px rgba(0,0,0,0.1);
+	box-shadow:0px 0px 8px 4px #000,0px 0px 4px rgba(255,255,255,0.5) inset;
+	overflow:hidden;
+}
+#crumbs
+{
+	position:absolute;
+	left:0px;
+	top:0px;
+	font-variant:small-caps;
+	font-weight:bold;
+	font-size:14px;
+	margin-top:4px;
+	color:#fff;
+}
+
+#content,#table
+{
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	background:rgba(255,255,255,0.5) linear-gradient(to left,rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 100%);
+	outline:none;
+}
+
+#content
+{
+	left:25%;
+	right:0px;
+}
+#table
+{
+	left:0px;
+	width:25%;
+}
+
+.block
+{
+	padding:6px 12px;
+	position:relative;
+	background:#f9f9f9;
+	line-height:125%;
+}
+
+.subtitle
+{
+	font-size:14px;
+	position:absolute;
+	left:50%;
+	opacity:0.75;
+	line-height:0;
+}
+
+.lvl0,.lvl1,.lvl2,.title/*,.lvl3::first-letter*/
+{
+	font-family:'Domine',serif;
+	font-variant:small-caps;
+	font-weight:bold;
+}
+/*.lvl3::first-letter{font-size:115%;}*/
+.lvl0,.lvl1
+{
+	box-shadow:0px 0px 4px rgba(0,0,0,0.2),0px 1px 2px rgba(0,0,0,0.5);
+}
+.lvl0
+{
+	font-size:35px;
+	text-align:center;
+	margin:24px -4px;
+	padding:24px 16px;
+	color:#fff;
+	background:linear-gradient(to right,rgba(255,0,0,0.4) 0%,rgba(255,0,0,0) 50%,rgba(255,0,0,0.4) 100%) #f93;
+	box-shadow:0px 0px 0px 1px rgba(255,0,0,0.25) inset,0px 0px 1px 2px rgba(255,255,255,0.25) inset,0px -5px 50px -15px rgba(0,0,255,1) inset,0px 0px 4px rgba(0,0,0,0.2),0px 1px 2px rgba(0,0,0,0.5);
+}
+.lvl1
+{
+	font-size:28px;
+	margin:8px 0px;
+	margin-top:24px;
+	padding-left:50px;
+}
+.lvl1:before
+{
+	content:'';
+	display:block;
+	position:absolute;
+	left:0px;
+	right:0px;
+	top:-24px;
+	height:16px;
+	background:linear-gradient(to top,rgba(255,255,255,0.25) 5%,rgba(0,0,0,0.25) 5%,rgba(0,0,0,0.5) 50%,rgba(255,255,255,0.25) 55%,rgba(255,255,255,0) 100%);
+}
+.lvl1:after
+{
+	content:'';
+	display:block;
+	position:absolute;
+	left:0px;
+	top:0px;
+	bottom:0px;
+	width:4px;
+	background:linear-gradient(to top,rgba(0,0,255,0.4) 0%,rgba(255,0,0,0.4) 50%,rgba(255,0,0,0) 100%) #f93;
+}
+.lvl2
+{
+	font-size:20px;
+	margin:4px;
+	margin-bottom:-12px;
+	background:#39f;
+	box-shadow:0px 0px 4px rgba(0,0,0,0.2),1px 1px 2px rgba(0,0,0,0.5),0px 0px 4px rgba(255,255,255,0.5) inset;
+	color:#fff;
+	display:inline-block;
+	z-index:100;
+	transform:rotate(-1deg);
+}
+
+.lvl3
+{
+	font-size:14px;
+	padding:8px;
+	margin:4px 32px;
+	box-shadow:0px 0px 4px rgba(0,0,0,0.2),1px 1px 2px rgba(0,0,0,0.5),0px 0px 4px rgba(255,255,255,0.5) inset;
+}
+.lvl4
+{
+	text-indent:12px;
+	padding:3px;
+}
+
+.list
+{
+	text-indent:0px;
+	padding:4px 8px;
+	margin:2px 16px;
+	font-size:13px;
+	background:rgba(0,0,0,0.05);
+	box-shadow:1px 1px 3px 1px rgba(0,0,0,0.1) inset;
+	line-height:110%;
+}
+.list:before
+{
+	content:'• ';
+}
+
+.warning
+{
+	margin:0px;
+	padding:8px;
+	color:#ffc;
+	background:#f60;
+	box-shadow:0px 0px 4px rgba(0,0,0,0.2),1px 1px 2px rgba(0,0,0,0.5),0px 0px 4px rgba(255,255,255,0.5) inset,0px -5px 50px -15px rgba(0,0,255,1) inset;
+	font-size:13px;
+	background:linear-gradient(to right,rgba(255,0,0,0.4) 0%,rgba(255,0,0,0.2) 50%,rgba(255,0,0,0.4) 100%) #f93;
+	box-shadow:0px 0px 0px 1px rgba(255,0,0,0.25) inset,0px 0px 1px 2px rgba(255,255,255,0.25) inset,0px -5px 50px -15px rgba(0,0,255,1) inset,0px 0px 4px rgba(0,0,0,0.2),0px 1px 2px rgba(0,0,0,0.5);
+}
+
+code
+{
+	text-indent:0px;
+	display:inline-block;
+	font-family:Courier,monospace;
+	color:rgba(0,0,0,0.85);
+	background:#39f;
+	color:#fff;
+	padding:0px 4px;
+	border-radius:4px;
+	box-shadow:1px 1px 0px #6cf inset,0px 0px 0px 1px rgba(0,0,0,0.2);
+	text-shadow:1px 1px 0px #069;
+}
+code.multi
+{
+	display:block;
+	padding:4px 8px;
+	white-space:pre-wrap;
+}
+.lvl2 code
+{
+	background:#f9f9f9;
+	color:rgba(0,0,0,0.85);
+	box-shadow:1px 1px 0px #fff inset,0px 0px 0px 1px rgba(0,0,0,0.2);
+	margin:0px -6px;
+	font-variant:normal;
+	text-shadow:inherit;
+}
+
+#table
+{
+	font-size:12px;
+	line-height:125%;
+}
+#table a
+{
+	display:block;
+	color:inherit;
+	text-decoration:none;
+	padding:2px 4px;
+}
+#table a:last-child,#content>.block:last-child
+{
+	margin-bottom:96px;
+}
+#table a:hover{position:relative;left:4px;}
+#table a:hover,#table a:hover code
+{
+	color:#000;
+	text-shadow:1px 0px #fff,-1px 0px #fff,0px 1px #fff,0px -1px #fff,1px 1px 1px rgba(0,0,0,0.5);
+}
+#table .title
+{
+	text-align:center;
+	padding:12px;
+	font-size:16px;
+	background:linear-gradient(to bottom,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 100%);
+}
+
+.link1
+{
+	border-bottom:1px solid rgba(0,0,0,0.25);
+	font-weight:bold;
+	margin-top:8px;
+}
+.link2
+{
+	border-left:12px solid rgba(0,0,0,0.25);
+}
+
+.block:target{animation:glow 1s;}
+
+@keyframes glow
+{
+	0% {background-color:#fff;box-shadow:0px 0px 4px 2px #fff;}
+	100% {}
+}
+
+
+/*scrollbars for some browsers*/
+::-webkit-scrollbar
+{
+	-webkit-appearance:none;
+	width:17px;
+}
+::-webkit-scrollbar-track
+{
+	background:#333;
+	box-shadow:
+			0px 0px 0px 1px #111 inset,
+			0px 0px 0px 3px #444 inset,
+			1px 1px 2px 3px #222 inset
+	;
+}
+::-webkit-scrollbar-thumb
+{
+	background:#ccc;
+	box-shadow:
+			0px 0px 0px 1px #333 inset,
+			0px 0px 0px 3px #999 inset,
+			1px 1px 1px 3px #fff inset
+	;
+}
+::-webkit-scrollbar-thumb:hover
+{background:#ddd;}
+::-webkit-scrollbar-thumb:active
+{background:#bbb;}
+
+
+
+</style>
+
+</head>
+
+<body>
+<div id="wrap">
+	<div id="crumbs">
+	<a href="./">Idle Game Maker</a> | Help
+	</div>
+	<div id="page">
+		<div id="table" tabindex="1"></div>
+		<div id="content" tabindex="0"></div>
+	</div>
+</div>
+
+<script>
+
+var l=function(el){return document.getElementById(el);};
+
+//look : I made a parser to build the games, I'm damn well gonna make a parser to build the documentation
+
+
+var toParse=`
+Idle Game Maker Handbook<div class="subtitle">last updated 24/08/2021</div>
+
+	The basics of Idle Game Maker
+			<b>This page includes help on every aspect of game development within Idle Game Maker.</b> Continue reading or pick a topic in the side-bar!
+		What is Idle Game Maker?
+			<b>Idle Game Maker</b> is an online tool that lets you create <b>idle games</b>, simply by <b>writing a text file</b>. No programming knowledge needed!
+			u:an idle game is a game that revolves around waiting for resources to build up, like Cookie Clicker.
+			u:while idle games are the main focus of Idle Game Maker, the engine is very flexible and you could make all sorts of games with enough creativity!
+		A word of warning
+			<div class="warning" style="overflow:hidden;">Idle Game Maker is one of our less-updated projects and may still contain bugs, quirks, and oversights. Features will be added, changed and fixed regularly, and we cannot guarantee 100% smooth sailing at this point. Please be patient, and don't forget to report bugs (or ideas!) on our <a href="https://discordapp.com/invite/cookie" target="_blank">Discord server</a> (we've got a channel just for Idle Game Maker).<div style="clear:left;float:right;font-style:italic;">-Orteil</div></div>
+		
+		How do I make a game?
+			An Idle Game Maker game is simply a text file that our website converts into a browser game.
+			To make your own game, you will have to write that text file using the commands and syntax described below (you'll see, there's a whole bunch of cool things you can do). Here's what a finished game file looks like : <a href="https://orteil.dashnet.org/igm/games/bunnyclicker.txt" target="_blank">https://orteil.dashnet.org/igm/games/bunnyclicker.txt</a>.
+			You will then have to find a place online to store your text file (<a href="http://pastebin.com/" target="_blank">pastebin.com</a> is a good one; your text files are hosted for free and, if you register, you can edit them as much as you want. <a href="http://www.topsite.com/best/paste" target="_blank">Here are some other text-hosting sites</a>).
+			Once you're happy with your new game, all that remains to do is to share it with the world!
+			
+		How do I play my game?
+			To play a game, take its source file's URL and append it to the following :
+			u:<b>https://orteil.dashnet.org/igm/?g=</b>
+			For instance, a game hosted at :
+			u:<b>www.example.com/mygame.txt</b>
+			...would be playable at :
+			u:<b>https://orteil.dashnet.org/igm/?g=www.example.com/mygame.txt</b>
+			//
+			A few things of note :
+			u:if your game is hosted on pastebin.com, you only have to refer to its identifier (the letters at the end of its url). For example, <a href="http://pastebin.com/9HYzgPWX" target="_blank">http://pastebin.com/9HYzgPWX</a> becomes <a href="https://orteil.dashnet.org/igm/?g=9HYzgPWX" target="_blank">https://orteil.dashnet.org/igm/?g=9HYzgPWX</a>.
+			u:<b>Note :</b> when hosting your file on pastebin.com, make sure you're registered - or you won't be able to edit your game later! Also make sure to set the file to never expire, and to make it either public or unlisted.
+			u:if you're not hosted on pastebin.com, make sure your file is a .txt file! Your game won't work with any other file type.
+			
+		General tips about game-making
+			Some suggestions on how to make a fun game :
+			u:You can make an idle game about practically <i>anything</i>. Just look around you!
+			u:Spend some time examining other games you like. You'll probably learn something from the gameplay or from the source file!
+			u:Test your game. <i>A lot.</i>
+			u:If people seem to like your game, consider making a reddit post on <a href="http://www.reddit.com/r/idlegamemaker/" target="_blank">r/idlegamemaker</a> where players can talk about it and discuss new features. Having community feedback is essential when making a good game!
+			u:Keep a separate version for testing only, so you don't accidentally ruin your players' saves.
+			u:Keep backups of your game's source - you never know!
+			u:Add colorful descriptions to the elements of your game and, if possible, pictures! Flavor is everything.
+			u:Don't mindlessly copy other cool games you've seen. Add something of your own, be creative!
+			u:Spelling mistakes can quickly make a game appear unprofessional. Use spell-check!
+			u:Keep your game fresh and your players curious by adding new stuff regularly!
+			
+		And now for some rules
+			Before you start making rad new idle games, you might want to read (and follow) these guidelines :
+			u:<b>All games made using this engine are copyrighted to their respective owners.</b>
+			u:<b>Content creators are expected to respect copyright laws. No user-created content is hosted on our servers.</b>
+			u:Don't use <b>illegal content</b> in your game!
+			u:Please no games involving <b>overly lewd, nude or violent</b> stuff.
+			u:You are allowed to link <b>any images hosted on our servers</b> (any file whose url begins with "https://dashnet.org/" or "https://orteil.dashnet.org/") in your Idle Game Maker games! (If you want to reuse all our Cookie Clicker assets and make your own better version of Cookie Clicker in our engine, that's up to you!)
+			u:Do not use <b>copyrighted images</b> (be careful with google image search)! If you use content that demands proper attribution, make sure to provide it somewhere!
+			u:Don't do anything shifty with our engine! Basically, <b>if it feels wrong, don't do it.</b>
+			u:Don't try to <b>mislead the players</b> into visiting websites they don't want to.
+			u:No circumventing our system to include <b>scripts</b> or other disallowed HTML tags in your games!
+
+	Writing source files
+			If you'd like to learn from example, you can start reading the source file of <a href="https://pastebin.com/raw/9HYzgPWX" target="_blank">an existing game</a> right away to get an idea of how Idle Game Maker source files work.
+			Feel free to just grab one of the example games and replace things to make it your own!
+			//
+			<b>What follows is a complete documentation of each component of the engine.</b>
+			If you see something written <code>like this</code>, it is a code snippet that can be directly used in your source code.
+			Good luck!
+			
+		Formatting
+			You have a certain degree of freedom when writing source files.
+			u:Leading tabs and spaces are completely ignored; feel free to use them if it helps make your source code clearer.
+			u~:You can mark a line as a comment with <code>//</code> :
+			(<code>//</code> needs to be at the start of the line)
+			<code>
+			//this is a comment, it will be ignored by the engine
+			</code>
+			~u
+			u~:You can create whole blocks of comments with <code>/* */</code> :
+			(<code>/*</code> needs to be at the start of a line, <code>*/</code> at the end of another)
+			<code>
+			/*
+				none of this
+				will be read
+				by the engine
+			*/
+			</code>
+			~u
+			
+		Sections
+			A game's source file is divided into <b>sections</b>. Each section (save for the first one) can be re-ordered as you like or omitted entirely.
+			You will find detailed information about each section later on, but here's a quick description first :
+			u:<code>Let's make a game!</code> - this is the section where you can specify the game's name, its author, and some other information.
+			u:<code>Settings</code> - this is where you can set general things such as the background image, the stylesheets and spritesheets, or the cost increase ratio.
+			u:<code>CSS</code> - contains raw CSS to style your game further.
+			u:<code>Includes</code> - contains your includes, which are bits of source file you can reuse multiple times later on. This can be a rather powerful feature.
+			u:<code>Layout</code> - specifies the page layout your game uses, which is completely customizable. If no layout is declared, a default layout will be used.
+			u:<code>Buttons</code> - start declaring buttons (things you can click on).
+			u:<code>Resources</code> - start declaring resources (things you can earn and spend).
+			u:<code>Buildings</code> - start declaring buildings (things you can buy that produce resources).
+			u:<code>Upgrades</code> - start declaring upgrades (things you can buy once that provide passive bonuses).
+			u:<code>Items</code> - start declaring items (like upgrades, except you can have multiple of the same type, each with its own properties).
+			u:<code>Achievements</code> - start declaring achievements (things you earn by doing other things).
+			u:<code>Shinies</code> - start declaring shinies (things that appear and disappear randomly that can be clicked for bonuses).
+			//
+			A quick example of how to use sections :
+			<code>
+			Let's make a game!
+				name:My Totally Original Game
+			
+			Resources
+				*pie
+					name:Pie
+					desc:A delicious pie.
+			
+			Upgrades
+				*applePieRecipe
+					name:Apple pie recipe
+					desc:Unlocks the ability to make apple pies!
+					
+				*cherryPieRecipe
+					name:Cherry pie recipe
+					desc:Boy, you'll never guess!
+			</code>
+		
+		Things
+			Your game is made of <b>Things</b>! Each resource, button, building, achievement and so on is a Thing.
+			Each thing has a unique <b>key</b> (sometimes also referred to as <b>id</b>), a simple identifier made of letters and digits (no spaces or special characters). Keys are important as they are used by things to interact with other things.
+			Once a thing's key is declared, you can add properties to it, such as its name, picture, effects and so on.
+			For instance, if you wish to create a building with the key <code>brownCow</code>, you would write :
+			<code>
+			Buildings
+				*brownCow
+					name:Brown cow
+					desc:A big friendly cow that generates 1 milk per second.
+					cost:20 coins
+					on tick:give 1 milk
+			</code>
+			//
+			Note :
+			u:You cannot use the same key for two different things.
+			u:You can declare multiple keys for the same thing by separating them with |, such as <code>*brownCow|brownCows</code> which will let you refer to your brown cows using both <code>brownCow</code> and <code>brownCows</code>; this lets you write more naturally without having to worry about plurals.
+			u:<b>Important :</b> <i>do NOT change a thing's first key once set!</i> This would mess up your players' saves since the engine would treat this thing as an entirely new object! You can change a thing's name at any time, however.
+			
+		Other syntax tips
+			u:Pretty much <b>every command on any component is optional</b>, save for the first line which should be <code>Let's make a game!</code>.
+			u:If you make a mistake in your source code (or use commands in ways we didn't expect), you might get an error message, or the game might freeze completely. Try to undo your last changes and see where it went wrong!
+			u:Writing code, even in Idle Game Maker, requires some patience and rigor; our code parser is designed to be fairly forgiving, but still - a single typo or syntax error is all it takes for your game to not run correctly!
+			u:A good way to learn more about our syntax is to check out the source for <a href="https://pastebin.com/raw/9HYzgPWX" target="_blank">Bunny Clicker</a>, a simple game specifically made to showcase many of Idle Game Maker's functions.
+			
+	Let's make a game!
+			<b>Let's get started!</b>
+			This is the first section in a source file, in which you define the essential information for your game.
+			Remember : all of the following is optional!
+		c:Let's make a game!
+			Begins this section, and starts your game proper. Idle Game Maker needs this in order to understand we're making a game!
+		c:name:Name
+			Lets you set a name for your game. Hopefully something cool!
+		c:author:Name
+		c:by:Name
+			It's you!
+		c:desc:Your description here!
+			A description of your game which will show up on the info screen.
+			Accepts <a href="#textEffects">text effects</a>.
+		c:forum post:X
+			<div class="warning" style="overflow:hidden;"><b>Deprecated:</b> our forums are no longer active and we've since switched to Discord.</div>
+			This will add a link in the "Info" menu to a DashNet forum post with this post number.
+			For instance, if your forum post's url is "http://forum.dashnet.org/discussion/1234/not-a-real-post", you would put in <code>forum post:1234</code>.
+			Use your forum post to give players a place to provide feedback, report bugs, and share their progress on your game!
+		c:created:DD/MM/YYYY
+			This is the date, month and year you created the game.
+		c:updated:DD/MM/YYYY
+			This is the date, month and year you last updated the game. You don't have to keep this up to date!</div>
+		c:version:X
+			<b>X</b> can be any number such as 1 or 2.13. If defined, it is displayed next to your game's name. Increase it when you add new stuff!
+	
+	Settings
+			This section contains miscellaneous options for your game, such as the background picture, the behavior of cost inflation, or your game's stylesheets and spritesheets.
+			Again, each of these commands is optional.
+		c:Settings
+			Begins this section.
+		c:background:url.jpg
+			Sets your game's background picture to url.jpg.
+		c:tiling background:url.jpg
+			Same as above, but the background picture will be tiled instead of scaled to fill the screen.
+		c:building cost increase:X%
+			Defines how much every building's costs should increase every time you buy one; a value of 110% means each time you buy a building, it gets 10% more expensive. 100% would mean no price increase; 200% makes the price double.
+			The default value is <b>115%</b>.
+			<b>Note :</b> can be overridden in a specific building with the command <code>cost increase:X%</code>.
+		c:building cost refund:X%
+			Defines how much of every building's costs are refunded when selling it. 50% means we get half of its current price back.
+			The default value is <b>50%</b>.
+			<b>Note :</b> can be overridden in a specific building with the command <code>cost refund:X%</code>.
+		c:spritesheet:Name, X by Y, url.jpg
+			This command defines a new spritesheet named "Name", where each tile is X pixels horizontally by Y pixels vertically, with the source at "url.jpg".
+			While a thing can use a single picture as an icon (<code>icon:url.jpg</code>), it is often more convenient to use a big picture composed of many little icons arranged in a grid, and then just pick one of those as an icon for your thing.
+			An example would be <code>spritesheet:icons, 48 by 48, url.jpg</code>, which you could then use to set a thing's icon with <code>icon:icons[3,1]</code> (which means : grab the tile in the spritesheet "icons" at position 3 horizontally, 1 vertically). Note : icons start in the top-left, at [0,0].
+			You can declare as many spritesheets as you want simply by calling this command several times, as long as they have different names.
+			u:<b>Note :</b> sprites in Idle Game Maker tend to be 48 by 48 pixels. If you want to use a different image size, you may have to use CSS classes and custom styling.
+		c:stylesheet:url
+			Adds a CSS stylesheet to your game. This defines the appearance of your game's interface (more information in <a href="#cSS">the next section</a>).
+			You can define as many stylesheets as you want simply by calling this command several times; their effects will stack.
+			<b>The stylesheet must be a .txt file,</b> not a .css file (unless it is one of our stylesheets stored locally).</b>
+			If no stylesheet is defined, the game uses the rather minimalist theme located at <a href="./stuff/basic.css" target="_blank">/stuff/basic.css</a>.
+			You can use another predefined stylesheet <code>stylesheet:stuff/bigBlue.css</code> for a nice, big, blue theme.
+		c:no particles
+			Some actions, such as buying things or clicking buttons, can create particles that display what things were produced or consumed.
+			Specifying this command prevents such particles from appearing.
+		c:no bulk particles
+			When changing the bulk-buy amount (such as with pressing shift and ctrl), a particle flies out announcing the state of the new bulk-buy amount. This command removes this feature.
+		`+/*c:bloom:X
+			Applies a bloom filter to your game, making things look glowy and soft. <b>X</b> is a number from 0 to 100 which determines the filter's intensity.
+			This can be a rather obnoxious and potentially low-performance effect; be warned that most players will play with filters turned off!*/`
+	
+	CSS
+			This section lets you add further styling after the stylesheets defined in the Settings section are applied.
+			Everything written in this section is converted into an extra stylesheet.
+			<b>CSS</b> stands for <b>C</b>ascading <b>S</b>tyle <b>S</b>heets, which is what browsers use to make webpages look good.
+			<b><a href="https://www.w3schools.com/css/" target="_blank">Read more about CSS here!</a></b>
+		Examples
+			Setting the background color (if no background picture is defined), the font, and the text color :
+			<code>
+			CSS
+				#game
+				{
+					background:cornflowerblue;
+					font-family:"Times New Roman",Times,serif;
+					color:black;
+				}
+			</code>
+			//
+			Making every thing have round edges and a semi-transparent white background :
+			<code>
+			CSS
+				.thing
+				{
+					border-radius:8px;
+					background:rgba(255,255,255,0.5);
+				}
+			</code>
+			//
+			Changing the default icon size :
+			<code>
+			CSS
+				.thing-icon,.particle
+				{
+					width:64px;
+					height:64px;
+				}
+			</code>
+			//
+			Blurring out things we can't afford yet :
+			u:<b>Note :</b> always prefix CSS that applies filters with <code>#game.filtersOn</code> so that players can disable it through settings.
+			<code>
+			CSS
+				#game.filtersOn .thing.cantAfford.notOwned
+				{
+					filter:blur(3px);
+				}
+			</code>
+			//
+			Adding a lovely red shadow to the text of every thing in your game :
+			(Please do not actually use this in your game. Players tend to have standards.)
+			<code>
+			CSS
+				.thing
+				{
+					text-shadow:1px 1px 0 red;
+				}
+			</code>
+		
+	Layout
+			The layout defines which things go where in your game. For instance, you could define a box that contains all the buttons the player can click, and another box to hold all the upgrades and achievements.
+			The game's appearance can further be customized with <a href="#cSS">CSS</a>.
+			<b>You do not need to bother with layout if you don't want to.</b> You can simply omit this section entirely to have a <b>simple, default layout</b> that should fit most games.
+		Example
+			A simple example layout would be :
+			<code>
+			Layout
+				*resources
+					contains:Resources
+					header:These are your resources.
+				*buildings
+					contains:Buildings
+					header:These are things you can build.
+					tooltip origin:left
+				*unlockables
+					contains:Upgrades, Achievements
+					names:hide
+			</code>
+		c:*boxKey
+			Creates a new box with the specified key, in this case "boxKey".
+			Boxes are the building blocks of your game's layout. A box can contain things and other boxes.
+			Box keys follow the same naming restrictions as thing keys : only letters and numbers allowed.
+			After a box is created with this command, all following commands apply to this box until a new box is created.
+		c:contains:X
+			Defines what things go in this box.
+			u:<code>contains:Buttons</code> will make all things with that type show up in this box. Works with <code>Resources</code>, <code>Buttons</code>, <code>Buildings</code>, <code>Upgrades</code>, <code>Achievements</code>, <code>Items</code>.
+			u:<code>contains:tag:someTag</code> will place all things with the specified tag in this box.
+			u:<code>contains:anotherBoxKey</code> will place the specified box inside this one. You can nest as many boxes into other boxes as you want, allowing for more complex layouts.
+			u~:
+			<code>contains:BulkDisplay</code> will display a little box that says something like "Buying 1" or "Selling 50", depending on the player's bulk-buy setting.
+			You'll usually want to place this in your buildings box, like so : <code>contains:BulkDisplay, Buildings</code>.
+			~u
+			u~:
+			<code>contains:Log</code> will show the log, a scrollable text box that you can log text into through <a href="#logThisIsAMessage">this command</a>.
+			~u
+			u:Put multiple things in the same box like so : <code>contains:Resources, tag:foodUpgrade, Buttons, someOtherBox, Log</code>.
+		c:in:boxKey
+			Adds this box to another box's contents.
+		c:header:some text
+			Defines text that shows up at the top of this box.
+			Accepts <a href="#textEffects">text effects</a>.
+		c:footer:some text
+			Defines text that shows up at the bottom of this box.
+			Accepts <a href="#textEffects">text effects</a>.
+		c:class:cssClass
+			Gives the specified CSS classes to the box.
+			See also <a href="#classCssClass-1">this command</a>.
+		c:tooltip origin:originName
+			When the mouse is on a thing in this box, its tooltip will appear in a different position depending on which originName you specify. Valid values are <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code>.
+		c:tooltip class:cssClass
+			The tooltip shown for things in this box will have the specified classes.
+		c:no tooltip
+			The things inside this box will not trigger a tooltip.
+		c:names:show
+		c:names:hide
+			Defines whether all things inside this box should show or hide their names.
+		c:icons:show
+		c:icons:hide
+			Defines whether all things inside this box should show or hide their icons.
+		c:costs:show
+		c:costs:hide
+			Defines whether all things inside this box should show or hide their costs.
+		c:ps:show
+		c:ps:hide
+			Defines whether all things inside this box should show or hide their production per second.
+		c:use default
+			Your game will use a simple, default layout.
+			The default layout uses this code :
+			<code>
+			*main
+				contains:res, buttons
+				*res
+					contains:Resources
+					class:fullWidth
+				*buttons
+					contains:Buttons
+			*store
+				contains:buildings, upgrades
+				*buildings
+					contains:BulkDisplay, Buildings
+					header:<t>Buildings</t>
+					tooltip origin:left
+				*upgrades
+					contains:Upgrades
+					header:<t>Upgrades</t>
+					costs:hide
+					names:hide
+			</code>
+			Even when using the default layout, you can still customize your layout further. For instance, if you wanted an extra box to display achievements :
+			<code>
+			Layout
+				use default
+				*achievs
+					in:main
+					contains:Achievements
+			</code>
+			
+	Things : general concepts
+			The following sections all involve Things - creating them and manipulating them.
+			While some types of Things have features unique to them (buildings can be bought and sold, you can have multiple items), all Things have some features in common.
+			These are :
+		c:*itemKey
+			The first line in a thing's declaration. This tells our engine you're starting a new Thing! The key provided will be the thing's unique identifier; use <code>*itemKey1|itemKey2|itemKey3</code> to create multiple identifiers that all redirect to this thing.
+			A key can <b>only contain letters and numbers</b>, with no spaces.
+			The section in which a thing is created (<code>Buildings</code>, <code>Upgrades</code>, <code>Resources</code>...) defines its type.
+		c:name:Name
+			This thing will be named Name.
+			You can specify a plural by using this syntax : <code>name:Normal name|Plural name</code>
+		c:desc:Your description here!
+			Defines a description for your thing; it will show up in tooltips when hovering on the thing.
+			You'll usually want to describe what the thing does (gives X of a resource, unlocks a new building...) and maybe add some colorful flavor text.
+			Accepts <a href="#textEffects">text effects</a>.
+		c:text:Some text here!
+			If a text property is specified, the thing will not display its name; instead, it will display this text.
+			This is useful because this property accepts <a href="#textEffects">text effects</a>, letting you display complex, dynamic information.
+			For instance, a resource could use <code>text:You have [?(this=0)|no gold|[this] gold].</code>, which would display as "You have 3 gold." if the resource's amount is 3, or "You have no gold." if it is 0.
+			Tooltips will still only show the thing's name and description, not its text.
+		c:icon:url.jpg
+		c:icon:spritesheetName[X,Y]<br>
+			Sets the icon for your thing; it will show up next to its name. This can be either a plain image url, or a spritesheet name as declared in the Settings section followed by [X,Y] - with X being the row of the icon (starting at 0 from the left) and Y being the column of the icon (starting at 0 from the top).
+			<b>Note :</b> you can give multiple icons to a thing by using the syntax <code>icon:icon1 icon2 icon3...</code>; this will overlay all the icons specified, with the first one being on top and the last one at the bottom. This allows you to mix and match icons at will.
+		c:tag:tagName
+		c:tags:tagName
+			Gives tags to the thing. You can declare multiple tags by separating them by spaces (<code>tags:tag1 tag2 tag3...</code>). Tags follow the same naming restrictions as thing keys : only letters and numbers allowed.
+			Tags do nothing by themselves, but can be used in several ways - a layout box could have <code>contains:tag:magicSpell</code>, and all things with the tag "magicSpell" would be placed into it; an upgrade could have the effect <code>multiply yield of tag:worker by 3</code> which would boost all things with the tag "worker".
+		c:costs:X
+			Defines the thing's costs, if it is a building or an upgrade.
+			X is in the form <code>30 gold, 5 XP, 2 magic</code>.
+			Costs on buildings are susceptible to scaling with the owned amount.
+		c:req:X
+			Defines some requirements for the thing to unlock. This has various effects depending on the thing's type.
+			If the thing is a resource, button, building or upgrade, it will not appear unless the specified requirements are fulfilled. It will disappear again if it doesn't match the requirements (unless it is an upgrade and you own it).
+			If the thing is an achievement, it will be earned if the specified requirements are fulfilled.
+			If the thing is a shiny, it will only spawn if the requirements are fulfilled.
+			Requirements can be simple amount checks, or full condition <a href="#expressions">expressions</a>.
+			Some examples :
+			u:<code>req:3 gems</code> - the thing will only unlock if you have at least 3 gems.
+			u:<code>req:15 power per second</code> - the thing will only unlock if you're producing 15 of the power resource per second.
+			u:<code>req:have archeryUpgrade</code> - the thing will only unlock if you own the archery upgrade.
+			u:<code>req:(waterLevel<20 and chance(50%))</code> - the thing will only unlock if the water level is less than 20, with a 1 in 2 chance.
+			You can also stack several requirements together, such as :
+			<code>
+			req:enemyHP&lt;enemyMaxHP*0.1
+			req:have finishAbility
+			</code>
+			The thing in this example would be a "Finish it!" button that shows up when the enemy is at low health.
+			According to the above requirements, it will only show up if the enemy's health points are less than 10% of their maximum and you own the "finishAbility" upgrade.
+		c:hidden
+			The thing will not be displayed.
+		c:no text
+			The thing will not display its name or cost, only its icon (if it has one).
+		c:class:cssClass
+			Give some CSS classes to the thing.
+			Multiple classes can be specified by separating them by spaces : <code>cssClass1 cssClass2 cssClass3...</code>.
+			Idle Game Maker comes preloaded with a few handy classes, so you can give your main button the class <code>class:bigButton hasFlares</code> to make it show as a large transparent button with a swirling halo behind it.
+			If you declared a custom stylesheet in Settings or are using additional CSS that adds more classes, you can use those classes here too.
+		c:icon class:cssClass
+			Gives CSS classes specifically to the thing's icon element.
+		c:tooltip origin:originName
+			When the mouse is on the thing, its tooltip will appear in a different position depending on which originName you specify. Valid values are <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code>.
+		c:tooltip class:cssClass
+			The thing's tooltip will have the specified CSS classes.
+		c:no tooltip
+			The thing will not trigger a tooltip.
+		c:start with:X
+			If the thing is a resource or a building, the player will start with X of it.
+		c:owned
+		c:start with
+			If the thing is an upgrade or an achievement, the player will own them at game start.
+		c:shown
+			The thing will be visible when the game starts.
+		c:hidden
+			The thing will be hidden when the game starts.
+		c:lit
+			The thing will be lit when the game starts. This does nothing except add the CSS class "lit" to the thing.
+		c:dim
+			The thing will be unlit when the game starts. This does nothing except add the CSS class "dim" to the thing.
+		c:hidden when 0
+			The thing will be hidden if its amount is 0 or less (if it is a resource or building) or if you do not own it (if it is an upgrade or achievement).
+		c:always hidden
+			The thing will never be displayed.
+			
+	Buttons
+			<b>Buttons</b> are things whose main purpose is to be clicked, usually to produce a resource.
+			Any thing can behave as a button by giving it <code>on click</code> effects, but buttons (and shinies) are the only elements that keep track of how many times they've been clicked.
+		Example button
+			&nbsp;
+			<code>
+			*scratchNose
+				name:Scratch nose
+				desc:Click this to scratch your nose. Grants 1 satisfaction per click.
+				on click:yield 1 satisfaction
+			</code>
+		c:show clicks
+			The button's tooltip will display how many times it's been clicked.
+		c:(thingKey:clicks)
+			In an expression, returns how many times the button has been clicked.
+			
+	Resources
+			<b>Resources</b> are things you can gain and spend.
+			You can use resources as currencies for purchasing buildings and upgrades, as timers, or as hidden counters for more complicated game mechanics.
+		Example resource
+			&nbsp;
+			<code>
+			*fuel
+				name:Fuel
+				desc:This is fuel for your rocket. You can't visit planets if you don't have enough fuel!
+			</code>
+		c:can be negative
+			Allows the resource's amount to go below 0.
+		c:is always:X
+			Sets the resource's amount to always be the specified value.
+			For instance, if you wanted a resource to track the lowest value ever reached by another resource, you would do <code>is always:min(otherResource)</code>.
+		c:show earned
+			The resource's tooltip will display its earned amount.
+		c:show max
+			The resource's tooltip will display its max amount.
+		c:(thingKey)
+			In an expression, returns the resource's current amount.
+		c:(thingKey:earned)
+			In an expression, returns the resource's total earned amount (this goes up with gains, but does not go down with losses).
+		c:(thingKey:max)
+			In an expression, returns the resource's highest amount it's ever reached.
+		c:(thingKey:ps)
+			In an expression, returns how much the resource is gaining (or losing) per second.
+			(Note : only gains and losses that happen in an on tick effect block count towards this number.)
+			
+	Buildings
+			<b>Buildings</b> are things you can buy and sell, which increases or lowers their amount. Their resource yield and costs are scaled by their amount.
+			A building can be clicked to purchase one of it; keyboard shortcuts can be used to bulk-buy and sell the building (shift-click for bulk-buying 50, ctrl-click for selling 1, ctrl-shift-click for bulk-selling 50).
+			A building's effects only kick in when you have at least 1 of it.
+		Example building
+			&nbsp;
+			<code>
+			*cheesecakeFactory
+				name:Cheesecake factory
+				desc:Combines the magic of cheese with the wonders of cake to produce 3 cheesecakes per second.
+				on tick:yield 3 cheesecakes
+				cost:100 money
+			</code>
+		c:cost increase:X%
+			Defines how much the building's costs should increase every time you buy one; a value of 110% means each time you buy 1, it gets 10% more expensive. 100% would mean no price increase; 200% makes the price double.
+			The default value is 115%.
+			Also see <code>building cost increase:X%</code> in the Settings section.
+		c:cost refund:X%
+			Defines how much of the building's costs are refunded when selling it. 50% means we get half of its current price back.
+			The default value is 50%.
+			Also see <code>building cost refund:X%</code> in the Settings section.
+		c:no buy
+			The building cannot be bought or sold by clicking it. Use this if you'd like to handle changing the building's amount using your own mechanics.
+		c:show max
+			The building's tooltip will display its max amount.
+		c:(thingKey)
+			In an expression, returns the building's current amount.
+		c:(thingKey:max)
+			In an expression, returns the building's highest amount it's ever reached.
+		
+	Upgrades
+			<b>Upgrades</b> are things you can purchase. They usually confer passive boosts.
+			An upgrade can be clicked to purchase it.
+			An upgrade's effects only kick in when you own it.
+		Example upgrade
+			&nbsp;
+			<code>
+			*kungfuTraining
+				name:Kung-fu training
+				desc:Everybody's doing it! 
+				passive:multiply yield of attackButton by 2
+				cost:3 trainingPoints
+			</code>
+		c:no buy
+			The upgrade cannot be bought by clicking it. Use this if you'd like to handle getting the upgrade using your own mechanics.
+		c:(thingKey)
+			In an expression, returns whether or not we own the upgrade.
+			
+	Achievements
+			<b>Achievements</b> are things you can unlock, usually as recognition for some milestone.
+			An achievement may have passive effects just like an upgrade, in which case the effects only kick in when you own it.
+		Example achievement
+			&nbsp;
+			<code>
+			*10clicks
+				name:Wowie! Ten whole clicks!
+				desc:You've clicked the big red button 10 times. Well done. Well done indeed.
+				req:10 bigButton:clicks
+			</code>
+		c:(thingKey)
+			In an expression, returns whether or not we own the achievement.
+			
+	Items
+			<b>Items</b> are things you can own multiple instances of; each instance may have its own properties.
+			A player can only own up to <b>100</b> item instances. Attempting to give them more will fail. You can check how many items you can still generate through the variable <code>ItemsLeft</code>, which logically ranges from 100 (no items) to 0 (all item slots used up).
+		Example item
+			&nbsp;
+			<code>
+			*sword
+				name:A sword
+				desc:A very generic sword. +3 attack.
+				passive:grant 3 attack
+			</code>
+			
+	Shinies
+			<b>Shinies</b> are things that appear randomly on the screen, linger around for a bit, then disappear again.
+			Shinies, like buttons, keep track of how many times they've been clicked.
+		Example shiny
+			&nbsp;
+			<code>
+			*luckyGnome
+				name:Lucky gnome
+				on click:yield (random(10,100)) gold
+				movement:anywhere fade bounce moveRandom
+				frequency:120
+			</code>
+		c:frequency:X
+			The shiny will spawn every X seconds.
+			<b>The shiny will not spawn by itself unless you define a frequency.</b> You will, however, be able to manually spawn it through effects.
+		c:frequency variation:X
+			The shiny may take up to an additional X seconds to spawn.
+			A shiny with <code>frequency:30</code> and <code>frequency variation:20</code> may take between 30 and 50 seconds to spawn.
+		c:duration:X
+			The shiny will stay on screen for X seconds before it disappears. Defaults to 10 seconds.
+		c:no click
+			The shiny will not respond to clicks; it will be purely visual.
+			You could use this creatively to employ some shinies as animated visual elements.
+		c:movement:X
+			Defines the behavior the shiny displays while on screen.
+			You can mix and match several behaviors like so : <code>movement:grow anywhere randomAngle fade</code>.
+			u:<code>anywhere</code> : the shiny will spawn on a random spot on the screen
+			u:<code>onLeft</code>, <code>onRight</code>, <code>onTop</code>, <code>onBottom</code> : the shiny will spawn on the specified edge of the screen
+			u:<code>onMouse</code> : the shiny will spawn on the mouse
+			u:<code>onThing:thingKey</code> : the shiny will spawn on the specified thing if that thing is visible
+			u:<code>onBox:boxKey</code> : the shiny will spawn on the specified box if that box is visible
+			u:<code>followMouse</code> : the shiny will stick to the mouse as it moves around
+			u:<code>followMouseSlow</code> : the shiny will stick to the mouse, but with some slack (you can define how much slack with <code>followMouseSlow:X</code>)
+			u:<code>wiggle</code> : the shiny will rotate softly back and forth (set a custom speed with <code>wiggle:X</code>)
+			u:<code>pulse</code> : the shiny will pulse (set a custom speed with <code>pulse:X</code>)
+			u:<code>randomAngle</code> : the shiny will spawn rotated in a random direction
+			u:<code>spinCW</code> : the shiny will spin clockwise (set a custom speed with <code>spinCW:X</code>)
+			u:<code>spinCCW</code> : the shiny will spin counter-clockwise (set a custom speed with <code>spinCCW:X</code>)
+			u:<code>spinRandom</code> : the shiny will spin clockwise or counter-clockwise (set a custom speed with <code>spinRandom:X</code>)
+			u:<code>fade</code> : the shiny will fade in and out over its lifetime
+			u:<code>grow</code> : the shiny will grow over its lifetime
+			u:<code>shrink</code> : the shiny will shrink over its lifetime
+			u:<code>growShrink</code> : the shiny will grow and then shrink over its lifetime
+			u:<code>moveRandom</code> : the shiny will move towards a random direction (set a custom speed with <code>moveRandom:X</code>)
+			u:<code>moveLeft</code>, <code>moveRight</code>, <code>moveTop</code>, <code>moveBottom</code> : the shiny will move towards the specified edge of the screen over its lifetime
+			u:<code>bobVertical</code> : the shiny will bob up and down (set a custom speed with <code>bobVertical:X</code>)
+			u:<code>bobHorizontal</code> : the shiny will bob left and right (set a custom speed with <code>bobHorizontal:X</code>)
+			u:<code>bounce</code> : the shiny will bounce up and down (set a custom speed with <code>bounce:X</code>)
+		c:(thingKey:clicks)
+			In an expression, returns how many times the shiny has been clicked.
+			
+	Text effects
+			These are effects you can apply to text in descriptions, logs and others.
+		Embeds
+			You can embed expressions in text.
+			For instance :
+			u:<code>[thingKey]</code> will be replaced by the amount of the given thing, if it is a resource or a builing.
+			u:<code>[thingKey:max]</code>, <code>[thingKey:ps]</code>, <code>[thingKey:clicks]</code> and others are all valid too.
+			u:<code>[3*thingKey+19]</code> or any other mathematical expression will display the expression's result.
+			u:<code>[s?thingKey]</code> will be replaced by a "s" if the specified thing's amount is different than 1. For instance : <code>You have [gems] gem[s?gems].</code>
+			u:<code>[n:thingKey]</code> will give the name of the specified thing. Use <code>[n:this]</code> to refer to the current thing.</code>
+			u:<code>[p:thingKey]</code> will give the plural of the specified thing. Use <code>[p:this]</code> to refer to the current thing.</code>
+			u:You can add text conditionally with <code>[?thingKey or expression|text to replace if true|text to replace if false]</code>; for instance, <code>You [?(have kungFu)|do|do not] know the secrets of kung fu.</code> will be replaced by "You do know the secrets of kung fu" if you own the kungFu upgrade, or "You do not know the secrets of kung fu" if not.
+		Tags
+			You can use <b>tags</b> in text to make it nicer-looking.
+			List of tags :
+			u:<code>&lt;b&gt;text&lt;/b&gt;</code> will produce <b>text</b>
+			u:<code>&lt;i&gt;text&lt;/i&gt;</code> will produce <i>text</i>
+			u:<code>&lt;u&gt;text&lt;/u&gt;</code> will produce <u>text</u>
+			u:<code>&lt;t&gt;text&lt;/t&gt;</code> will style the text as a big title
+			u:<code>&lt;q&gt;text&lt;/q&gt;</code> will style the text as a quote (use this for flavor text in descriptions)
+			u:<code>&lt;#f00&gt;text&lt;/#&gt;</code> will display the text in the given hex color
+			u:<code>&lt;/&gt;</code> will produce a linebreak
+			u:<code>&lt;//&gt;</code> will start a new paragraph
+			u:<code>&lt;.&gt;something or other</code> will produce a dotted list item (use this to list effects in descriptions)
+			<b>Warning :</b> if a tag requires a closing tag (like <code>&lt;b&gt;this&lt;/b&gt;</code>), omitting the closing tag may break the game's layout!
+		
+	Effects
+			Effects are a powerful feature that lets any thing do just about anything.
+			Effects are used to produce resources, generate items, chance prices, boost production, and do different things based on conditions.
+			You can declare an effect in one line :
+			<code>
+			on click:yield 1 chocolate
+			</code>
+			...or on multiple lines, if your effects are more complex (this is called an effect block) :
+			<code>
+			on click:
+				yield 1 chocolate
+				if (have magicChocolateUpgrade) yield 3 cocoaSparkles
+				if (chance(0.1%) yield rareCocoaPod
+			end
+			</code>
+			<b>Note the final <code>end</code>!</b> This is easy to forget, but multiline effects should always end with it.
+			You can define multiple of the same effect, in which case they will all stack sequentially :
+			<code>
+			passive:yield 3 beans
+			passive:multiply yield of beans by 1.1
+			</code>
+			...is the same as :
+			<code>
+			passive:
+				yield 3 beans
+				multiply yield of beans by 1.1
+			end
+			</code>
+		Types of effects
+			There are a few built-in effect types which are triggered at different times.
+			u~:
+			<code>on start:</code> will trigger once when a new game is launched, such as when the player first opens the game or wipes their save.
+			~u
+			u~:
+			<code>on save:</code> will trigger right before the game saves or is exported.
+			~u
+			u~:
+			<code>on load:</code> will trigger after the game is loaded, be it from opening the game, importing a save, or manually reloading.
+			~u
+			u~:
+			<code>on tick:</code> will trigger every <b>game tick</b> - that is, every second; use this for resource production by buildings.
+			If the thing is a building, this will only fire if its amount is at least 0.
+			If the thing is an upgrade or an achievement, this will only fire if you own it.
+			<b>Example :</b>
+			<code>
+			on tick:yield 1 apple
+			</code>
+			~u
+			u~:
+			<code>on click:</code> will trigger when the thing is clicked; use this for button and shiny effects.
+			Many effects, such as passive boosts, do not work in on click events, and must be placed in passive effect blocks instead.
+			<b>Example :</b>
+			<code>
+			on click:yield 1 apple
+			</code>
+			~u
+			u~:
+			<code>passive:</code> will trigger internally to grant various boosts; use this for upgrade effects.
+			<b>Example :</b>
+			<code>
+			passive:grant 10 maxScience
+			passive:multiply yield of makeScienceButton by 1.5
+			passive:multiply cost of scienceMachine by 0.9
+			</code>
+			(Tip : passive effect blocks and on tick effect blocks are actually handled as the same block by the engine but are differentiated for clarity.)
+			~u
+			u:<code>on earn:</code> will trigger when the thing's amount is increased or (if it is an upgrade or achievement) if it is earned.
+			u:<code>on lose:</code> will trigger when the thing's amount is decreased or (if it is an upgrade or achievement) if it is lost.
+		Custom effects
+			You may also declare custom effects, which can be called from other effects (see <a href="#doEffectWithThingSelector">do effect with thingSelector</a>).
+			For instance :
+			<code>
+			on explore:
+				log You explore [n:this]!
+				gain 1 landsExplored
+			end
+			</code>
+			...which you would trigger with :
+			<code>
+			on click:
+				do explore with jungleLand
+			end
+			</code>
+			Effect names follow the same naming restrictions as thing keys : only letters and numbers allowed.
+		Condition flow
+			Effects may include <b>conditions</b>, which are <a href="#expressions">expressions</a> that follow if/else logic to determine if the subsequent effects are applied or not.
+			For instance :
+			<code>
+			on click:if (someResource>=50) yield someUpgrade
+			</code>
+			Condition expressions should always be in parentheses.
+			Multiline condition blocks should finish with <code>end</code>, like multiline effects :
+			<code>
+			on click:
+				if (someResource>=50)
+					yield someUpgrade
+				else if (have someAchievement and someResource>=25)
+					lose 25 someResource
+				else
+					yield 5 someResource
+				end
+			end
+			</code>
+		Variables
+			Effects may use <b>local variables</b>. A local variable is a value you can set, change, and use within an effect block. Once the effect block is finished, all local variables are reset.
+			A variable's name starts with $ and contains only letters or digits.
+			Variables are often used for convenience when doing complex operations.
+			An example :
+			<code>
+			$goldToFind=random(3,10)
+			if (have extraLootUpgrade) $goldToFind=$goldToFind+random(1,5)
+			if (level>=50) $goldToFind=$goldToFind*3
+			yield $goldToFind gold
+			</code>
+		Selectors
+			Some effects can apply to sets of things - for instance, all owned upgrades, or all things with a certain tag. This is done through <b>selectors</b>.
+			Examples :
+			u:<code>thingKey</code> - targets the thing with that specific key
+			u:<code>this</code> - targets the thing the effect belongs to
+			u:<code>thingKey:owned</code> - targets any things that you own
+			u:<code>thingKey:notOwned</code> - targets any things that you do not own
+			u:<code>tag:myTag</code> - targets any things with that tag
+			u:<code>notTag:myTag</code> - targets any things that do not have that tag
+			u:<code>:All</code> - targets everything
+			u:<code>:Resources</code>, <code>:Buttons</code>, <code>:Buildings</code>, <code>:Upgrades</code>, <code>:Achievements</code>, <code>:Items</code>, <code>:Shinies</code> - targets any things with the specified type
+			u:You can mix and match - <code>:Upgrades:tag:ingredient:owned</code> will target all owned upgrades that have the "ingredient" tag
+			In the following commands, "<b>thingKey</b>" denotes that a thing's key is required; "<b>thingSelector</b>" means that the command can accept a thing's key or a complex selector.
+			//
+			What follows is an explanation of each effect.
+		c:thingSelector is X
+		c:thingSelector=X
+			If the targeted thing is a resource or a building, set its amount to X.
+			X can be a number, "this", another thing, a local variable or an expression.
+			For instance :
+			u:<code>gold is 3</code> - player now has 3 gold.
+			u:<code>gold is this</code> - player now has this thing's value in gold.
+			u:<code>gold is someOtherResource</code> - player now has the value of someOtherResource in gold.
+			u:<code>gold is someOtherResource*3</code> - player now has the value of someOtherResource, multiplied by 3, in gold.
+			u:<code>gold is $someLocalVar</code> - player now has the value of the local variable named "someLocalVar" in gold.
+			u:<code>gold is $someLocalVar*3</code> - player now has the value of the local variable named "someLocalVar", multiplied by 3, in gold.
+			<b>This logic also applies for most of the other effects.</b>
+		c:$localVar is X
+		c:$localVar=X
+			Set the specified <a href="#variables">local variable</a>'s value to X.
+		c:yield X thingSelector
+			If the specified thing is a resource or a building, gain X of it.
+			If it is an upgrade or achievement, earn it.
+			u:Aliases for "yield" are "gain", "win" and "get".
+		c:yield thingSelector
+			If the specified thing is a resource, a building or an item type, gain 1 of it.
+			If the specified thing is an upgrade or an achievement, earn it.
+		c:lose X thingSelector
+			If the specified thing is a resource, a building or an item type, lose X of it.
+			If it is an upgrade or achievement, lose it.
+			Note that losses are not affected by yield increases and multipliers.
+		c:lose thingSelector
+			If the specified thing is an item, an upgrade or an achievement, lose it.
+			If it is an item type, a resource or a building, lose all of it.
+			u:<b>Tip :</b> to get rid of an item by clicking it, give it the effect <code>on click:lose this</code>.
+		c:grant X thingKey
+			If the specified thing is a resource or a building, gain a permanent +X to its amount.
+			This effect is reversed if you lose whatever is emitting this effect.
+			May produce unexpected results when interfering with other effects on the same target thing; if you have grant effects happening on a thing, you may want to refrain from also having yield and lose effects on it. (For instance, a sword item could <code>grant 3 attack</code> but a strength potion shouldn't <code>yield 1 attack</code> on use; instead, it should possibly trigger a buff that has <code>grant 1 attack</code>.)
+			Note that grant effects are computed when the effect starts and on save load, so if X varies, the effect may be change unpredictably.
+		c:increase yield of thingSelector by X
+			The specified thing produces X more when applying its yield effects (if it used to produce 3 gold per second, applying the effect <code>increase yield of thatBuilding by 2</code> now makes it produce 5 gold per second).
+			If something else produces the thing, the amount produced will be X more (if something used to produce 3 gold per second, applying the effect <code>increase yield of gold by 2</code> now makes it produce 5 gold per second).
+			u:An alias for "increase yield" is "increase gain".
+		c:increase thingSelector2 yield of thingSelector by X
+			Like above, but only applies to yields of the things that match thingSelector2.
+			For instance, a building could be producing "wood" and "stone", but <code>increase stone yield of thatBuilding by 3</code> would only boost the building's stone production.
+		c:lower yield of thingSelector by X
+			The same, but production is lowered by X instead.
+		c:lower thingSelector2 yield of thingSelector by X
+			Like above, but only applies to yields of the things that match thingSelector2.
+		c:multiply yield of thingSelector by X
+			The same, but production is multiplied by X instead.
+		c:multiply thingSelector2 yield of thingSelector by X
+			Like above, but only applies to yields of the things that match thingSelector2.
+		c:increase cost of thingSelector by X
+			The specified thing costs X more (an upgrade that costs 3 gold and 1 gem and gets a <code>increase cost of thatUpgrade by 2</code> would now cost 5 gold and 3 gems).
+			If something else costs some of the thing, the price is also affected (if the effect <code>increase cost of gems by 2</code> is active, something that used to cost 3 gold and 1 gem would now cost 3 gold and 3 gems).
+		c:lower cost of thingSelector by X
+			The same, but cost is lowered by X instead.
+		c:multiply cost of thingSelector by X
+			The same, but cost is multiplied by X instead.
+		c:multiply refund of thingSelector by X
+			The thing's refund rate is multiplied by X, cumulative with its initial refund rate.
+			If a building's refund rate is 50%, <code>multiply refund of :Buildings by 0.5</code> would halve its refund rate - making its effective refund rate 75%.
+		c:spawn thingKey
+			Spawn the shiny with the given key.
+		c:multiply frequency of thingSelector by X
+			If the thing specified is a shiny, its base frequency is multiplied by X.
+			<code>multiply frequency of someShiny by 0.5</code> would make that shiny spawn twice as often.
+		c:multiply duration of thingSelector by X
+			If the thing specified is a shiny, its base duration is multiplied by X.
+			<code>multiply duration of someShiny by 1.2</code> would make that shiny stay on screen 20% longer.
+		c:do effect
+		c:do effect with thingSelector
+			Trigger the specified <a href="#customEffects">custom effect</a> for the thing.
+			<code>do sayHello</code> would have the current thing do its effect named "sayHello".
+			<code>do emote with tag:animal</code> would go through all things tagged "animal" and have them do their effect named "emote".
+			u:In the case of nested effects, the engine will stop applying effects if the nesting is more than 10 effects deep.
+			u~:
+			<a href="#variables">Local variables</a> do not reset when inside a triggered effect.
+			This allows us to do things like the following :
+			<code>
+			*countButton
+				on click:
+					$total=0
+					do count with tag:countable
+					log There are [$total] countables.
+				end
+			*aThing
+				tag:countable
+				on count:$total=$total+1
+			*anotherThing
+				tag:countable
+				on count:$total=$total+1
+			</code>
+			~u
+		c:show thingSelector
+			The thing will be displayed.
+		c:hide thingSelector
+			The thing will be hidden.
+		c:light thingSelector
+			The thing will be lit. This does nothing except add the CSS class "lit" to the thing.
+		c:dim thingSelector
+			The thing will be unlit. This does nothing except add the CSS class "dim" to the thing.
+		c:anim cssClass
+			Trigger the CSS animation with the class "cssClass" on this thing's element. Having an animation in an on click effect can make your buttons feel more reactive and fun.
+		c:anim icon cssClass
+			The same, but applies the CSS animation to this thing's icon specifically.
+		c:log This is a message!
+			If your layout includes a log, this pops a new message onto the log with the text "This is a message!".
+			You can also use the syntax <code>log(someCSSclass) This message will have the class "someCSSclass"!</code>.
+		c:clear log
+			Removes all messages from the log.
+		c:toast This is a toast!
+			Emits a "toast" (a little popup emerging from the bottom of the screen and lingering for a few seconds) containing the specified text.
+			
+	Expressions
+			Some commands, such as effects and unlock requirements, can accept <b>expressions</b>. Expressions allow you to use arbitrary mathematic operations to produce values or condition checks.
+			For instance, say you want to multiply the player's gold resource by 3; you would have an effect that does <code>set gold to gold*3</code>. You could also have a button that gives between 0 and 5 gems on click - this would be <code>yield random(0,5) gems</code>. An achievement that only unlocks when the player has clicked an "attack" button 50 times or more would have the command <code>req:attackButton:clicks>=50</code>.
+			An expression that contains spaces (such as <code>(have thisUpgrade and thatResource>10)</code>) should be wrapped in parentheses.
+		Values
+			Expressions transform values to produce a result.
+			Values can be simple numbers, such as <code>41</code> or <code>2.7</code>; they can also be things referenced by their key - <code>myBuilding</code> would represent how many of that building the player has.
+			There's many ways to get creative with values; for instance, <code>random(3,enemyLevel)</code> would give a random number between 3, and the amount of the "enemyLevel" resource.
+		Conditions
+			Effects and unlock requirements may involve conditions, which are simply expressions that are considered false if they equal exactly 0, or true otherwise.
+			For instance :
+			<code>on click:if (have canClick) yield 1 coolPoint</code>
+			<code>req:coolPoints>=100 and have trophyCase</code>
+			//
+			What follows is an explanation of everything that can be used in expressions.
+		c:(X)
+			Parentheses allow you to nest values inside each other. For instance, <code>min(healthPoints,maxHealthPoints)*(3+vitality)+10</code> would give the lower of the amounts of the resources "healthPoints" and "maxHealthPoints", multiplied by 3 plus the amount of "vitality", plus 10.
+			Expressions follow the <a href="https://en.wikipedia.org/wiki/Order_of_operations" target="_blank">standard order of operations</a>.
+		c:thingKey
+			If the thing specified is a resource or building, this gives the thing's amount.
+			If the thing specified is an upgrade or achievement, this gives 1 if the thing is owned, 0 otherwise.
+		c:thingKey:max
+			If the thing specified is a resource or building, returns the maximum amount the thing has ever had.
+		c:thingKey:earned
+			If the thing specified is a resource, returns how much of it has been earned in total.
+		c:thingKey:ps
+			If the thing specified is a resource, returns how much the thing is gaining or losing per second.
+			(Note : only gains and losses that happen in an on tick effect block count towards this number.)
+		c:thingKey:clicks
+			If the thing specified is a button or a shiny, returns how many times the thing has been clicked.
+		c:have thingKey
+			If the thing specified is a resource or building, returns 1 if we have at least 1 of the thing, 0 otherwise.
+			If the thing specified is an upgrade or achievement, returns 1 if the thing is owned, 0 otherwise.
+		c:no thingKey
+			Like <code>have thingKey</code>, but the result is inverted.
+		c:$localVar
+			Gives the value of the specified <a href="#variables">local variable</a>.
+		c:and
+		c:or
+			Used to combine conditions. For instance, <code>if (have digAbility and energy>=3)</code> will return 1 if both the conditions specified are true; <code>if (health<10 or no selfHeal or energy&lt;breakingPoint)</code> will return 1 if any of the conditions specified are true.
+			This works with parenthesis nesting too, as in <code>if (XP>=XPneeded and (have combatIsOver or have canLevelUp))</code>.
+		c:X+Y
+			Simply returns the result of adding X and Y.
+		c:X-Y
+			Returns the result of subtracting Y from X.
+		c:X*Y
+			Returns the result of multiplying X by Y.
+		c:X/Y
+			Returns the result of dividing X by Y.
+		c:X%Y
+			Returns the <a href="https://en.wikipedia.org/wiki/Modulo_operation" target="_blank">modulo</a> of X and Y.
+		c:pow(X,Y)
+			Returns X to the power of Y.
+		c:is
+		c:=
+			Returns 1 if X is exactly Y, 0 otherwise.
+		c:X&lt;Y
+			Returns 1 if X is less than Y, 0 otherwise.
+		c:X&lt;=Y
+			Returns 1 if X is less than or equal to Y, 0 otherwise.
+		c:X>Y
+			Returns 1 if X is greater than Y, 0 otherwise.
+		c:X>=Y
+			Returns 1 if X is greater than or equal to Y, 0 otherwise.
+		c:!(X)
+			Returns the opposite of the given expression; for instance, if a condition was true, putting a ! in front of it makes the result false instead.
+		c:max(X,Y)
+			Returns X if it is higher than Y; otherwise, returns Y.
+		c:min(X,Y)
+			Returns X if it is lower than Y; otherwise, returns Y.
+		c:floor(X)
+			Returns X, rounded down; <code>floor(6.9)</code> would return 6.
+		c:ceil(X)
+			Returns X, rounded up; <code>ceil(6.9)</code> would return 7.
+		c:round(X)
+			Returns X, rounded; <code>round(6.9)</code> would return 7.
+		c:roundr(X)
+			Random rounding; the result will be rounded up or down, depending on how close the value is to the respective bound; for instance, <code>roundr(6.9)</code> will round up with a 90% chance, otherwise it will round down.
+		c:random(X)
+		c:random(X,Y)
+			Gives a random number between 0 and X, or if Y is specified, a random number between X and Y (inclusive).
+			u:Example : <code>random(1,9)</code> could give 1, 3, 5, 9...
+			u:<b>A note about randomness :</b> boost effects such as <code>multiply yield of myButton by random(1,3)</code> will change their value every game tick; however, grant effects such as <code>grant random(1,3) magic</code> will remain steady, but will change their value when the thing calling the effect is deactivated and reactivated, and on game load. As such, it is unadvised to use randomness for grant effects.
+		c:frandom(X)
+		c:frandom(X,Y)
+			Like <code>random(X,Y)</code>, but gives a random float number between X and Y (non-inclusive).
+			u:Example : <code>random(1,9)</code> could give 1.52097, 3.962206, 5.126063, 8.999999...)
+		c:chance(X%)
+			Tosses a coin; there is an X% chance that this will return 1, otherwise it returns 0. X should be a value between 0 and 100.
+			u:Example : <code>if (chance(30%)) yield 1 magicRing</code> will grant a magic ring 30% of the time.
+		c:lit
+			Returns 1 if the calling thing is lit, 0 otherwise.
+		c:dim
+			Returns 1 if the calling thing is not lit, 0 otherwise.
+		c:ItemsLeft
+			Returns how many item slots you can still use. If the player doesn't have any items, this should return 100; if the player has 100 items, this will return 0 and no further items can be gained. You may want to use this to handle the case where a player would gain an item, but is unable to due to hitting the limit.
+	
+	Templates
+			Templates let you declare a pseudo-thing with its own commands; all new things declared after it will copy its commands.
+			For instance, you can use this to say "All the upgrades after this have a price of 20" or "All the following buildings have the same class and effects".
+			You declare a template with the line <code>*TEMPLATE</code>, then use whatever commands you'd like to apply to all the subsequent things.
+			When a thing declares its own command, it overrides whatever value the template previously set, except for certain commands (such as effects) where the new values are simply added to what the template already set.
+			Templates are cleared when you declare a new template or start a new section.
+		Example use
+			Templates are used as follows :
+			<code>
+			Upgrades
+				*TEMPLATE
+					desc:You get 3 times more ice cream per click!
+					passive:multiply yield of makeIceCreamButton by 3
+					
+				*scooper
+					name:Ice cream scooper
+					//this will have the description and effects provided by the template
+					
+				*icebox
+					name:Ice box
+					//this will also have the description and effects provided by the template
+					
+				*sprinkles
+					name:Sprinkles
+					desc:The dutch eat this on toast for some reason! Also, you get 3 times more ice cream per click.
+					//this will have the effects of the template, but use its own description
+			</code>
+			
+	Includes
+			Includes are an advanced feature that lets you create complex source files while avoiding code repetition.
+			You use includes by <b>first defining an include</b> in the Includes section, then <b>calling it as many times as you want</b> later in the code. Each include call is replaced by its full include text before being executed as source code.
+		Structure
+			Let's take a simple example include and cut it up :
+			<code>*include multiplyBy3 %value : %value*3</code>
+			u:<code>*include</code> - starts defining a new include.
+			u:<code>multiplyBy3</code> - the next word after <code>*include</code> sets the include's name.
+			u~:
+			<code>%value</code> - adds a parameter.
+			An include can have multiple parameters, such as <code>*include sayThing %name %textToSay</code>.
+			A parameter can have a default value which will be used if an include call doesn't specify that parameter; this is done like so : <code>*include sayThing %name="Anonymous" %textToSay="..."</code>.
+			~u
+			u:<code> : </code> - defines this include as a single-line include, meaning we can then call it from inside other lines (see the following Examples section for an example of a multi-line include). Everything after the <code> : </code> is the include's content.
+			u:<code>%value*3</code> - the include's content, which any call to this include will be replaced by. This can be pretty much anything you want, and usually involves the parameters the include defined.
+			//
+			Let's now look at a call for that same include :
+			<code>on click:gain [i:multiplyBy3 %value="20"] gold</code>
+			u:<code>[i:</code> - signals that we are calling an include.
+			u:<code>multiplyBy3</code> - this is the name of the include we're calling.
+			u:<code>%value="20"</code> - sets the parameter "%value" to "20". This means everytime "%value" is encountered in the include's content, it will be replaced here with "20".
+			u:<code>]</code> - closes the include call.
+		Examples
+			A very simple, one-line, pretty much useless include :
+			<code>
+			Includes
+				*include multiplyBy3 %value : %value*3
+			</code>
+			Consequently, if you were to write :
+			<code>[i:multiplyBy3 %value="4"]</code>
+			...it would automatically be replaced in your source code by :
+			<code>4*3</code>
+			You could then use it like so :
+			<code>
+				log 11 times 3 is [[i:multiplyBy3 %value="11"]].
+				on click:gain [i:multiplyBy3 %value="20"] gold
+			</code>
+			//
+			The following code creates a multi-line include that lets you create entire upgrades in one include call.
+			<code>
+			Includes
+			*include food %id %name %flavor="alright"
+				*food[%id]
+					name:[%name]
+					desc:This [%name] is [%flavor].
+			</code>
+			You would use it like so :
+			<code>
+			Upgrades
+				[include food %id="apple" %name="Apple"]
+				[include food %id="banana" %name="Banana" %flavor="sweet"]
+				[include food %id="burger" %name="Burger" %flavor="delicious"]
+			</code>
+			Which would be equivalent to the following (note the space saved!) :
+			<code>
+			Upgrades
+				*foodapple
+					name:Apple
+					desc:This Apple is alright.
+				*foodbanana
+					name:Banana
+					desc:This Banana is sweet.
+				*foodburger
+					name:Burger
+					desc:This Burger is delicious.
+			</code>
+	Closing words
+			Ready to show off your new game? Share your game's URL with your friends so they can test it for you. Announce your game on <a href="http://www.reddit.com/r/idlegamemaker/" target="_blank">r/idlegamemaker</a>. Release updates, get devoted fans, add obscure easter eggs!
+			//
+			<b>Idle Game Maker</b> is a website by Orteil and Opti, 2014-2021. All rights reserved.
+			Some security patches by George Omnet.
+			We hope you have as much fun using it as we did making it!
+			You can find our other stuff at <a href="https://www.dashnet.org/wp/" target="_blank">DashNet.org</a>.
+			Need to contact us? Please do so on <a href="http://orteil42.tumblr.com/ask" target="_blank">Orteil's tumblr</a> or on our <a href="https://discordapp.com/invite/cookie" target="_blank">Discord server</a>.
+			<div style="float:right;font-style:italic;font-weight:bold;text-align:right;margin:32px 0px;">Thank you for using Idle Game Maker.<br>-Orteil</div>
+			<div style="clear:both;float:right;font-size:12px;opacity:0.6;text-align:right;margin:32px 0px;">Dedicated to Peanut, a little gray cat.</div>
+			
+`;
+
+G={};
+
+G.ready=false;
+G.Launch=function()
+{
+	if (G.ready) return;
+	G.ready=true;
+	
+	function camelize(str) {
+		return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+			if (+match === 0) return "";
+			return index == 0 ? match.toLowerCase() : match.toUpperCase();
+		});
+	}
+	
+	l('content').focus();
+
+	G.byVersion={};
+	G.bits={};
+	G.section=0;
+	G.bit=function(line,level)
+	{
+		var id=line.replace('<code>','');
+		id=id.replace('</code>','');
+		id=camelize(id);
+		id=id.replace(/\W/g,'');
+		//if (level==2 && G.section) id=G.section.id+'-'+id;
+		var plus=0;
+		//if (G.bits[id] && level==2 && G.section) id+='-'+G.section.id;
+		var baseId=id;
+		while (G.bits[id])
+		{
+			plus++;
+			id=baseId+'-'+plus;
+		}
+		if (!G.byVersion[version]) G.byVersion[version]=[];
+		G.byVersion[version].push('<a class="link'+level+'" href="#'+id+'">'+line+'</a>');
+		this.id=id;
+		this.line=line;
+		this.level=level;
+		if (this.level==1) G.section=this;
+		this.link='<a class="link'+level+'" href="#'+id+'">'+line+'</a>';
+		G.bits[this.id]=this;
+		return this;
+	}
+	
+	var str='';
+	var str2='<div class="title">Table Of Contents</div>';
+	var lastLevel=0;
+	var inCode=false;
+	var inList=false;
+	var lines=toParse.split(String.fromCharCode(10));
+	for (var i in lines)
+	{
+		var line=lines[i];
+		if (line.trim()=='<code>') {str+='<code class="multi">';inCode=true;continue;}
+		if (line.trim()=='</code>') {str+='</code>';inCode=false;}
+		if (inCode)
+		{
+			var tabs=0;var ii=0;
+			while (line.charAt(ii)=='	'){tabs++;ii++;}
+			for (var ii=0;ii<(tabs-lastLevel+1);ii++){str+='  ';}
+			str+=line.trim()+String.fromCharCode(10);
+			continue;
+		}
+		if (line.trim()=='</code>') {continue;}
+		if (line.trim().length==0) continue;
+		if (line.trim()=='~u' && inList) {str+='</div>';inList=false;continue;}
+		if (inList)
+		{
+			str+=line.trim()+'<br>';
+			continue;
+		}
+		var level=0;
+		var type='';
+		var subType=0;
+		var ii=0;
+		while (line.charAt(ii)=='	')
+		{
+			level++;
+			ii++;
+		}
+		line=line.substring(level);
+		if (line.charAt(0)==':')
+		{
+			var ii=1;
+			while (line.charAt(ii)!=':')
+			{
+				type+=line.charAt(ii);
+				ii++;
+			}
+			line=line.substring(ii+1);
+		}
+		else
+		{
+			if (level==3) level++;
+			type='lvl'+level;
+		}
+		var version=1;
+		if (line.indexOf('v:')==0)
+		{
+			line=line.substring(2);
+			version='';
+			var ii=0;
+			while (line.charAt(ii)!=':')
+			{
+				version+=line.charAt(ii);
+				ii++;
+			}
+			line=line.substring(ii+1);
+			version=parseFloat(version);
+		}
+		if (line.indexOf('u:')==0){subType='list';line=line.substring(2);}
+		else if (line.indexOf('u~:')==0){subType='list';line=line.substring(3)+' ';inList=true;}
+		else if (line.indexOf('c:')==0){subType='code';line='<code>'+line.substring(2)+'</code>';}
+		//str+='('+type+') level '+level+' : '+line.substring(0,20)+'<br>';
+		if (lastLevel<4 && level==4) {str+='<div class="block lvl3">';}
+		else if (lastLevel==4 && level<4) str+='</div>';
+		
+		if (line=='//') {line='';str+='</div><div class="block lvl3">';}
+		//if (line=='//') line='';
+		
+		var id=0;
+		if (level==1 || level==2)
+		{
+			/*id=line.replace('<code>','');
+			id=id.replace('</code>','');
+			id=camelize(id);
+			id=id.replace(/\W/g,'');
+			str2+='<a class="link'+level+'" href="#'+id+'">'+line+'</a>';
+			if (!G.byVersion[version]) G.byVersion[version]=[];
+			G.byVersion[version].push('<a class="link'+level+'" href="#'+id+'">'+line+'</a>');
+			*/
+			var bit=new G.bit(line,level);
+			str2+=bit.link;
+			id=bit.id;
+		}
+		
+		if (line!='')
+		{
+			if (level==2) str+='<div '+(id?'id="'+id+'" ':'')+'class="block '+type+''+(subType?' '+subType:'')+'"><div class="lvl2inner">'+line+'</div></div>';
+			else str+='<div '+(id?'id="'+id+'" ':'')+'class="block '+type+''+(subType?' '+subType:'')+'">'+line+(inList?'':'</div>');
+		}
+		lastLevel=level;
+	}
+	
+	l('content').innerHTML=str;
+	l('table').innerHTML=str2;
+	
+	if (window.location.hash && l(window.location.hash.substring(1)))
+	{
+		l(window.location.hash.substring(1)).scrollIntoView();
+	}
+}
+
+window.onload=G.Launch;
+</script>
+
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"bb95ad56b18d4ea6bbf1f664862b75a2","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
