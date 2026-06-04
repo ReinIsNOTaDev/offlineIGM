@@ -810,10 +810,20 @@ G.Init=function()
     {
         //load data file
         G.url=decodeURIComponent(G.urlVars.g);
+        G.source=decodeURIComponent(G.urlVars.s);
+        G.identifier=decodeURIComponent(G.urlVars.i);
+
+        if (G.source == 'undefined') G.source='pastebin';
+        if ((G.source == 'github' || G.source == 'filegarden') && G.identifier == 'undefined') {
+            G.noData();
+            return false;
+        }
 
         if (G.url.indexOf('/')==0) G.url='./games'+G.url+'.txt';
-        else if (!G.local && G.url.indexOf('www.')!=0 && G.url.indexOf('http://')!=0 && G.url.indexOf('https://')!=0) G.url='https://pastebin.com/raw/'+G.url;
-
+        else if (G.url.indexOf('www.')==0 || G.url.indexOf('http://')==0 || G.url.indexOf('https://')==0) G.url=G.url;
+        else if (G.source == 'pastebin') G.url='https://pastebin.com/raw/'+G.url;
+        else if (G.source == 'github') G.url='https://raw.githubusercontent.com/'+G.identifier+'/refs/heads/'+G.url;
+        else if (G.source == 'filegarden') G.url='https://file.garden/'+G.identifier+'/'+G.url;
             console.log('Fetching game at '+G.url+'...');
         G.saveTo=G.url;
         if (TOPARSE) setTimeout(G.dataLoaded,100);

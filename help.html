@@ -384,7 +384,7 @@ code.multi
 var l=function(el){return document.getElementById(el);};
 
 //look : I made a parser to build the games, I'm damn well gonna make a parser to build the documentation
-
+//you know what, fair.
 
 var toParse=`
 Idle Game Maker Handbook<div class="subtitle">last updated 24/08/2021</div>
@@ -416,6 +416,11 @@ Idle Game Maker Handbook<div class="subtitle">last updated 24/08/2021</div>
 			u:if your game is hosted on pastebin.com, you only have to refer to its identifier (the letters at the end of its url). For example, <a href="http://pastebin.com/9HYzgPWX" target="_blank">http://pastebin.com/9HYzgPWX</a> becomes <a href="https://orteil.dashnet.org/igm/?g=9HYzgPWX" target="_blank">https://orteil.dashnet.org/igm/?g=9HYzgPWX</a>.
 			u:<b>Note :</b> when hosting your file on pastebin.com, make sure you're registered - or you won't be able to edit your game later! Also make sure to set the file to never expire, and to make it either public or unlisted.
 			u:if you're not hosted on pastebin.com, make sure your file is a .txt file! Your game won't work with any other file type.
+			//
+			More things of note for offlineIGM :
+			u:pastebin.com doesn't work due to it not having an <code>Access-Control-Allow-Origin</code> header. It could be fixed by using a proxy server like IGM does, but I haven't looked around the options I could use yet.
+			u:if your game is hosted on github or file.garden, you can refer to its file path (at the end of the url, for github it also includes the branch you're on), but you do need to use the <code>i</code> (identifier) and <code>s</code> (source) url variables, so for example <a href="https://raw.githubusercontent.com/boshkihmm/richgame/refs/heads/main/public" target="_blank">https://raw.githubusercontent.com/boshkihmm/richgame/refs/heads/main/public</a> becomes <a target="_blank">index.html?g=main/public&s=github&i=boshkihmm/richgame</a>, or <a href="https://file.garden/Y3WCFJOdi23QPQVx/jam/A_Frozen_Christmas" target="_blank">https://file.garden/Y3WCFJOdi23QPQVx/jam/A_Frozen_Christmas becomes <a target="_blank">index.html?g=jam/A_Frozen_Christmas&s=filegarden&i=Y3WCFJOdi23QPQVx</a>
+			u:if this wasn't good documentation sorry
 			
 		General tips about game-making
 			Some suggestions on how to make a fun game :
