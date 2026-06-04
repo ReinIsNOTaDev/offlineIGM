@@ -1734,12 +1734,12 @@ G.Init=function()
             {
                 if (me.hiddenWhen0)
                 {
-                    if ((me.type=='building' || me.type=='res') && me.amount<=0) hide=true;
+                    if ((me.type=='building' || me.type=='res' || me.type=='button' || me.type=='shiny') && me.amount<=0) hide=true;
                     else if ((me.type=='upgrade' || me.type=='achiev') && me.owned<=0) hide=true;
                 }
                 if (!hide && me.reqFunc)
                 {
-                    if ((me.type=='building' || me.type=='res') && !me.checkReqs()) hide=true;
+                    if ((me.type=='building' || me.type=='res' || me.type=='button' || me.type=='shiny') && !me.checkReqs()) hide=true;
                     else if ((me.type=='upgrade' || me.type=='achiev') && me.owned<=0 && !me.checkReqs()) hide=true;
                 }
             }
@@ -4711,7 +4711,7 @@ G.Init=function()
                         <div class="headerTitle">Info</div>
                         <div style="padding:4px;overflow-y:auto;">
                         <div class="sectionTitle">About</div>
-                        <div class="listing">You are playing <b>`+G.name+`</b>`+(G.version?' v.'+B(G.version):'')+`, by <b>`+(G.author||'Anonymous')+`</b>.
+                        <div class="listing">You are playing <b>`+G.name+`</b>`+(G.version?' v.'+G.version:'')+`, by <b>`+(G.author||'Anonymous')+`</b>.
                         `+(G.forumPost?'<div><a href="http://forum.dashnet.org/discussion/'+G.forumPost+'" target="_blank">[View this game\'s forum post]</a></div>':'')+`
                         </div>
                         `+(G.desc?'<div class="listing desc"><div>'+G.getTextValue(G.desc)+'</div></div>':'')+`
