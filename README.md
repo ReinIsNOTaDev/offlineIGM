@@ -7,9 +7,9 @@ Included are all of the needed files to run IGM, it's guide/documentation, and i
 
 NOT Included are the server.php that is used (by IGM atleast) to fetch websites
 ## Changes
-- Changed the ajax function to not depend on server.php (by changing it from fetching a 'server.php?q=fetch|url' to just fetching 'url')
-- Changed IGM handling when it detects it's loaded using a file (eg. giving up on fetching stylesheets that aren't appended .css, using a function called LoadScript for the text file?? Yeah...)
+- Changed the ajax function to not depend on server.php we can't access (by changing it from fetching a 'server.php?q=fetch|url' to just fetching 'url')
+- Changed IGM handling when it detects it's loaded using a file (eg. giving up on fetching stylesheets that aren't appended .css, using a function called LoadScript, *the function used to load javascript files*, for the text file?? Yeah...)
 ## Issues
-- CORS ): (You can't access /bunnyclicker through just opening the index.html, or any website who doesn't have an "access-control-allow-origin" header set to "*", which includes Pastebin. They just didn't implement it at all lol)
+- CORS ): (You can't access /bunnyclicker through just opening the index.html, or any website who doesn't have an "access-control-allow-origin" header set to "*", which includes Pastebin, who just didn't implement it at all lol)
 ## How to run
 Clone this repo. Run it by either opening index.html or running any https server of your choosing. (probably)
