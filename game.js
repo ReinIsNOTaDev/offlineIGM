@@ -2521,7 +2521,7 @@ G.Init=function()
                     var v=G.getVarValue(me.v,owner);
                     G.localVars[w]=v;
                 }
-                else if ((type=='yield' || type=='lose') && context!='tick')
+                else if (type=='yield' || type=='lose')
                 {
                     var w2=G.getThings(me.w,owner);
                     var v=amount;
@@ -3114,10 +3114,10 @@ G.Init=function()
 
         //sanitizing functions
         //regexps are used scarcely because I don't trust myself with those
-        G.Kalpha='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ';
-        G.Kalphanum='.1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ';
+        G.Kalpha='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        G.Kalphanum='.1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         G.Knum='.1234567890';
-        G.Kvar='1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ';
+        G.Kvar='1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         G.reservedKeywords=['this','that','all','except','but','is','isn\'t','no','not','have','floor','round','ceil','max','min','include','by','and','or','for','per','in','if','end','else','name','desc','tag','tags','Box','Boxes','Building','Buildings','Resource','Resources','Button','Buttons','Shiny','Shinies','Upgrade','Upgrades','Item','Items','Achievement','Achievements','Setting','Settings','slot1','slot2','slot3','slot4','prop1','prop2','prop3','prop4'];
         G.checkId=function(str)
         {
