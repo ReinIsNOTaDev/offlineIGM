@@ -23,6 +23,7 @@ This is NOT planned to be a continuation or future version of IGM. This is just 
 - Bugfix: `req:` now works on Achievements and Shinies
 - Bugfix: Upgrades (and Achievements!) can now be lost via on tick effects
 - Bugfix: Capital Y is now a valid character for thingKeys
+- Bugfix: Parenthesis in background images doesn't cause error
 ### `feat`
 - Fancier URL variables, and more options for file hosters
 ## Issues

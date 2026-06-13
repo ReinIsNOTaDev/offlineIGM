@@ -2765,7 +2765,7 @@ G.Init=function()
                 str='background-image:';
                 for (var ii in icon)
                 {
-                    str+='url('+icon[ii].url+'),';
+                    str+='url("'+icon[ii].url+'"),';
                 }
                 str=str.slice(0,-1);
                 str+=';background-position:';
