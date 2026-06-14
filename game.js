@@ -124,6 +124,7 @@ var STR2=function(str)//shortcut
 
 //the old Beautify function from Cookie Clicker, shortened to B(value)
 //initially adapted from http://cookieclicker.wikia.com/wiki/Frozen_Cookies_%28JavaScript_Add-on%29
+// that's https://cookieclicker.wiki.gg/wiki/Cookie_Clicker_Wiki:Add-Ons#Frozen_Cookies in the modern day
 function formatEveryThirdPower(notations)
 {
     return function (value)
@@ -811,13 +812,14 @@ G.Init=function()
         //load data file
         G.url=decodeURIComponent(G.urlVars.g);
 
-        if (G.url.indexOf('/')==0) G.url='./games'+G.url+'.txt';
+        if (G.url.indexOf('/')==0) {G.url='./games'+G.url+'.txt'; G.hosted=true;}
         else if (!G.local && G.url.indexOf('www.')!=0 && G.url.indexOf('http://')!=0 && G.url.indexOf('https://')!=0) G.url='https://pastebin.com/raw/'+G.url;
 
             console.log('Fetching game at '+G.url+'...');
         G.saveTo=G.url;
+        G.context="when loading game";
         if (TOPARSE) setTimeout(G.dataLoaded,100);
-        else if (G.local) ajax(G.url,G.dataLoaded);
+        else if (G.hosted || G.local) localFetch(G.url,G.dataLoaded);
         else ajax(G.url,G.dataLoaded);
     }
     else G.noData();
@@ -3062,7 +3064,7 @@ G.Init=function()
         G.line=0;
         G.lineNums=[];
         G.foundError=false;
-        G.context='';
+        G.context;
         G.parseError=function(str)
         {
             var rawStr=str;
